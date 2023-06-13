@@ -1,0 +1,16 @@
+{
+  "extends": "./.nuxt/tsconfig.json",
+  "compilerOptions": {
+    "target": "es2020",
+    "module": "commonjs",
+    "baseUrl": ".",
+    "paths": {
+      "~/*": ["./src/*"]
+    },
+    "types": [
+      "@nuxt/types",
+      "@types/node"
+    ]
+  },
+  "includes": ["src/**/*.ts", "src/**/*.vue"]
+}
