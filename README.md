@@ -26,14 +26,8 @@ https://nuxt.com/docs/guide/directory-structure/env から必要な箇所を抜�
 Listening http://[::]:3000
 
 {
-  app: {
-    baseURL: '/',
-    basePath: '/',
-    assetsPath: '/_nuxt/',
-    cdnURL: '',
-    buildAssetsDir: '/_nuxt/'
-  },
-  nitro: { envPrefix: 'NUXT_', routeRules: {} },
+  app: { baseURL: '/', buildAssetsDir: '/_nuxt/', cdnURL: '' },
+  nitro: { envPrefix: 'NUXT_', routeRules: { '/__nuxt_error': [Object] } },
   public: {},
   BASE_URL: 'http://localhost:4000',
   build: { number: 1 }
@@ -47,14 +41,11 @@ Listening http://[::]:3000
 ❯ BASE_URL=http://localhost:4000 node .output/server/index.mjs
 
 {
-  app: {
-    baseURL: '/',
-    basePath: '/',
-    assetsPath: '/_nuxt/',
-    cdnURL: '',
-    buildAssetsDir: '/_nuxt/'
+  app: { baseURL: '/', buildAssetsDir: '/_nuxt/', cdnURL: '' },
+  nitro: {
+    envPrefix: 'NUXT_',
+    routeRules: { '/__nuxt_error': [Object], '/_nuxt/**': [Object] }
   },
-  nitro: { envPrefix: 'NUXT_', routeRules: {} },
   public: {},
   BASE_URL: 'http://localhost:3000',
   build: { number: 0 }

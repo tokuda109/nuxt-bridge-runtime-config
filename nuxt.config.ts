@@ -1,10 +1,7 @@
-import { defineNuxtConfig } from '@nuxt/bridge';
+import { defineNuxtConfig } from 'nuxt/config';
 
 const config = defineNuxtConfig({
   srcDir: 'src',
-  typescript: {
-    typeCheck: true,
-  },
   runtimeConfig: {
     BASE_URL: process.env.BASE_URL || '',
     build: {
