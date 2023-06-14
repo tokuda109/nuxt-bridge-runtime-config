@@ -1,10 +1,14 @@
 # nuxt-bridge-runtime-config
 
+This is a demo application to resolve how I pass the environment variables in `nuxt preview`.
+
 `nuxi preview` で環境変数をどのように渡すのかを確認するためのデモアプリ。
 
-## ドキュメント
+## ドキュメント / Documentation
 
 https://nuxt.com/docs/guide/directory-structure/env から必要な箇所を抜粋。
+
+Picking information needed this investigation from https://nuxt.com/docs/guide/directory-structure/env.
 
 > if you have a .env file in your project root directory, it will be automatically loaded at build, dev, and generate time, and any environment variables set there will be accessible within your nuxt.config file and modules.
 >
@@ -16,9 +20,12 @@ https://nuxt.com/docs/guide/directory-structure/env から必要な箇所を抜�
 > これを設定するには環境ごとに違います。Linux では、DATABASE_HOST=mydatabaseconnectionstring node .output/server/index.mjs のように引数として渡せます。
 > もしくは、source .env && node .output/server/index.mjs のように env ファイルを反映させることもできます。
 
-## 確認手順
+## 確認手順 / Confirmation steps
 
 `nuxi dev` に環境変数を渡すと Runtime Config に反映される。次のコマンドを実行して、http://localhost:3000 にアクセスすると次の Rumtime Config が出力される。
+
+By passing the environment variables to `nuxi dev`, they will be reflected to the Runtime Config.
+Runnning the following command, and access to the http://localhost:3000, the following results are output.
 
 ```
 ❯ npm ci
@@ -41,6 +48,8 @@ Listening http://[::]:3000
 
 しかし、次のような実行に環境変数を渡しても反映されない。
 
+However, they won't be reflected with the following command:
+
 ```
 ❯ npm run build
 ❯ BASE_URL=http://localhost:4000 node .output/server/index.mjs
@@ -60,10 +69,10 @@ Listening http://[::]:3000
 ```
 
 ブラウザで確認すると、HTML は http://localhost:4000 になっているが、クライアント上で http://localhost:3000 に切り替わる。
-
 これは process.env としては環境変数を渡すことができ、Node.js は環境変数を受け取ることができるが、ブラウザ上では環境変数をアプリケーション実行時に受け取れないことを意味する。
 
-どうするか?
+When we check it on browser, we can get http://localhost:4000 in HTML, but it's replaced to http://localhost:3000 on browser.
+This means that we can pass the environment variables on Node.js by process.env, but we cannot get those variables on browser.
 
 ```
 ❯ BASE_URL=http://localhost:4000 NUXT_PUBLIC_BASE_URL=http://localhost:4000 node .output/server/index.mjs
@@ -84,7 +93,11 @@ Listening http://[::]:3000
 
 `NUXT_PUBLIC_BASE_URL=http://localhost:4000` で Runtime Config の上書きができる。(Runtime Config の `BASE_URL` は 3000 のまま)
 
+We can override the runtime config by `NUXT_PUBLIC_BASE_URL=http://localhost:4000`. (`BASE_URL` in the runtime config is still keep)
+
 **結論: なので、Node.js は process.env.BASE_URL で環境変数を受け取り、ブラウザは Runtime Config の public から受け取ればよさそう。**
+
+** Investigation result: So we should get the environment variables on Node.js by process.env, and on Browser by public fields in the runtime config.**
 
 ## 調査メモ
 
