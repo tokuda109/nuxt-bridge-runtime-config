@@ -18,7 +18,7 @@ https://nuxt.com/docs/guide/directory-structure/env から必要な箇所を抜�
 
 ## 確認手順
 
-`nuxi dev` に環境変数を渡すと Runtime Config に反映される。
+`nuxi dev` に環境変数を渡すと Runtime Config に反映される。次のコマンドを実行して、http://localhost:3000 にアクセスすると次の Rumtime Config が出力される。
 
 ```
 ❯ npm ci
@@ -34,13 +34,13 @@ Listening http://[::]:3000
     buildAssetsDir: '/_nuxt/'
   },
   nitro: { envPrefix: 'NUXT_', routeRules: {} },
-  public: {},
+  public: { baseUrl: 'http://localhost:4000' },
   BASE_URL: 'http://localhost:4000',
-  build: { number: 1 }
+  build: { number: 0 }
 }
 ```
 
-しかし、`nuxi preview` に環境変数を渡しても反映されない。
+しかし、次のような実行に環境変数を渡しても反映されない。
 
 ```
 ❯ npm run build
@@ -55,13 +55,25 @@ Listening http://[::]:3000
     buildAssetsDir: '/_nuxt/'
   },
   nitro: { envPrefix: 'NUXT_', routeRules: {} },
-  public: {},
+  public: { baseUrl: 'http://localhost:3000' },
   BASE_URL: 'http://localhost:3000',
   build: { number: 0 }
 }
 ```
 
+ブラウザで確認すると、HTML は http://localhost:4000 になっているが、クライアント上で http://localhost:3000 に切り替わる。
+
+これは process.env としては環境変数を渡すことができ、Node.js は環境変数を受け取ることができるが、ブラウザ上では環境変数をアプリケーション実行時に受け取れないことを意味する。
+
+どうするか?
+
 ## 調査メモ
+
+### 似たような問題 / 質問
+
+- https://discord.com/channels/473401852243869706/1102186562567012443/1102186562567012443
+- https://discord.com/channels/473401852243869706/1080132545292812298/1080132545292812298
+
 
 ### ofetch は 1.0.1 で固定している
 
@@ -87,3 +99,7 @@ You may need an additional loader to handle the result of these loaders.
  @ ./.nuxt/client.js
  @ multi ./node_modules/eventsource-polyfill/dist/browserify-eventsource.js (webpack)-hot-middleware/client.js?reload=true&timeout=30000&ansiColors=&overlayStyles=&path=%2F__webpack_hmr%2Fclient&name=client ./.nuxt/client.js
 ```
+
+### GitHub Issues
+
+* https://github.com/nuxt/nuxt/issues/15220

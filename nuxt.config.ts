@@ -10,6 +10,10 @@ const config = defineNuxtConfig({
     build: {
       number: 0,
     },
+
+    public: {
+      baseUrl: process.env.BASE_URL || '',
+    },
   },
 });
 
