@@ -35,8 +35,7 @@ Listening http://[::]:3000
   },
   nitro: { envPrefix: 'NUXT_', routeRules: {} },
   public: { baseUrl: 'http://localhost:4000' },
-  BASE_URL: 'http://localhost:4000',
-  build: { number: 0 }
+  BASE_URL: 'http://localhost:4000'
 }
 ```
 
@@ -56,8 +55,7 @@ Listening http://[::]:3000
   },
   nitro: { envPrefix: 'NUXT_', routeRules: {} },
   public: { baseUrl: 'http://localhost:3000' },
-  BASE_URL: 'http://localhost:3000',
-  build: { number: 0 }
+  BASE_URL: 'http://localhost:3000'
 }
 ```
 
@@ -66,6 +64,27 @@ Listening http://[::]:3000
 これは process.env としては環境変数を渡すことができ、Node.js は環境変数を受け取ることができるが、ブラウザ上では環境変数をアプリケーション実行時に受け取れないことを意味する。
 
 どうするか?
+
+```
+❯ BASE_URL=http://localhost:4000 NUXT_PUBLIC_BASE_URL=http://localhost:4000 node .output/server/index.mjs
+
+{
+  app: {
+    baseURL: '/',
+    basePath: '/',
+    assetsPath: '/_nuxt/',
+    cdnURL: '',
+    buildAssetsDir: '/_nuxt/'
+  },
+  nitro: { envPrefix: 'NUXT_', routeRules: {} },
+  public: { baseUrl: 'http://localhost:4000' },
+  BASE_URL: 'http://localhost:3000'
+}
+```
+
+`NUXT_PUBLIC_BASE_URL=http://localhost:4000` で Runtime Config の上書きができる。(Runtime Config の `BASE_URL` は 3000 のまま)
+
+**結論: なので、Node.js は process.env.BASE_URL で環境変数を受け取り、ブラウザは Runtime Config の public から受け取ればよさそう。**
 
 ## 調査メモ
 

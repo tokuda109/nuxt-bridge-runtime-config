@@ -7,9 +7,6 @@ const config = defineNuxtConfig({
   },
   runtimeConfig: {
     BASE_URL: process.env.BASE_URL || '',
-    build: {
-      number: 0,
-    },
 
     public: {
       baseUrl: process.env.BASE_URL || '',
