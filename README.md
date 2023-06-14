@@ -93,19 +93,19 @@ This means that we can pass the environment variables on Node.js by process.env,
 
 `NUXT_PUBLIC_BASE_URL=http://localhost:4000` で Runtime Config の上書きができる。(Runtime Config の `BASE_URL` は 3000 のまま)
 
-We can override the runtime config by `NUXT_PUBLIC_BASE_URL=http://localhost:4000`. (`BASE_URL` in the runtime config is still keep)
+We can override the runtime config by `NUXT_PUBLIC_BASE_URL=http://localhost:4000`. (`BASE_URL` in the runtime config is still 3000)
 
 **結論: なので、Node.js は process.env.BASE_URL で環境変数を受け取り、ブラウザは Runtime Config の public から受け取ればよさそう。**
 
-** Investigation result: So we should get the environment variables on Node.js by process.env, and on Browser by public fields in the runtime config.**
+**Investigation result: So we should get the environment variables on Node.js by process.env, and on Browser by public fields in the runtime config.**
 
 ## 調査メモ
 
 ### 似たような問題 / 質問
 
-- https://discord.com/channels/473401852243869706/1102186562567012443/1102186562567012443
-- https://discord.com/channels/473401852243869706/1080132545292812298/1080132545292812298
-
+* https://discord.com/channels/473401852243869706/1102186562567012443/1102186562567012443
+* https://discord.com/channels/473401852243869706/1080132545292812298/1080132545292812298
+* https://github.com/nuxt/nuxt/issues/15220
 
 ### ofetch は 1.0.1 で固定している
 
@@ -131,7 +131,3 @@ You may need an additional loader to handle the result of these loaders.
  @ ./.nuxt/client.js
  @ multi ./node_modules/eventsource-polyfill/dist/browserify-eventsource.js (webpack)-hot-middleware/client.js?reload=true&timeout=30000&ansiColors=&overlayStyles=&path=%2F__webpack_hmr%2Fclient&name=client ./.nuxt/client.js
 ```
-
-### GitHub Issues
-
-* https://github.com/nuxt/nuxt/issues/15220
